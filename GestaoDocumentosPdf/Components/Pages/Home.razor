@@ -1,0 +1,19 @@
+﻿@page "/home"
+@rendermode InteractiveServer
+
+@inject GestaoDocumentosPdf.Services.SessaoScoped Sessao
+
+<h3>Bem-vindo, @Sessao.UsuarioNome!</h3>
+
+@code {
+    private bool carregado = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender && !carregado)
+        {
+            carregado = true;
+            await Sessao.CarregarSessaoAsync(); // ✅ seguro aqui!
+            StateHasChanged(); // atualiza a tela com o nome do usuário
+        }
+    }
+}

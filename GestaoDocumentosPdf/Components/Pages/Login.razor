@@ -1,0 +1,76 @@
+﻿@rendermode InteractiveServer
+@page "/login"
+@using GestaoDocumentosPdf.Data
+@using GestaoDocumentosPdf.Services
+@using Microsoft.EntityFrameworkCore
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
+@inject AppDbContext Db
+@inject SessaoScoped Sessao
+@layout GestaoDocumentosPdf.Components.Layout.EmptyLayout
+
+
+<div class="login-box">
+    <h3 class="text-center mb-4">Login</h3>
+
+    @if (!string.IsNullOrEmpty(MensagemErro))
+    {
+        <div class="alert alert-danger">@MensagemErro</div>
+    }
+    <EditForm Model="loginModel" OnValidSubmit="FazerLogin" FormName="loginForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <InputText class="form-control" @bind-Value="loginModel.Email" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Senha</label>
+            <InputText class="form-control" type="password" @bind-Value="loginModel.Senha" />
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit">Entrar</button>
+    </EditForm>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+    private string MensagemErro = string.Empty;
+
+    private async Task FazerLogin() {
+        if (string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Senha))
+        {
+            MensagemErro = "Preencha todos os campos.";
+            return;
+        }
+
+        var usuario = await Db.Usuarios
+            .FirstOrDefaultAsync(u => u.Email == loginModel.Email && u.Senha == loginModel.Senha && u.Ativo);
+
+        if (usuario is null)
+        {
+            MensagemErro = "Usuário ou senha inválidos.";
+            return;
+        }
+
+ 
+        // Salvar sessão via serviço
+        await Sessao.DefinirUsuarioAsync(usuario.Id, usuario.Nome);
+
+        // Aguarde a persistência e redirecione só uma vez
+        Navigation.NavigateTo("/home", forceLoad: true);
+
+
+    }
+
+    public class LoginModel
+    {
+        [Required(ErrorMessage = "O campo Email é obrigatório.")]
+        [EmailAddress(ErrorMessage = "Digite um email válido.")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "O campo Senha é obrigatório.")]
+        public string Senha { get; set; } = string.Empty;
+    }
+}

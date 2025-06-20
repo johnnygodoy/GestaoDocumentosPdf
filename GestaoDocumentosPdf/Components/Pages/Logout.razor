@@ -1,0 +1,10 @@
+@inject NavigationManager Navigation
+@inject GestaoDocumentosPdf.Services.SessaoScoped Sessao
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await Sessao.LimparAsync();
+        Navigation.NavigateTo("/login", forceLoad: true);
+    }
+}

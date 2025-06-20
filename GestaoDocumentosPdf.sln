@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36212.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoDocumentosPdf", "GestaoDocumentosPdf\GestaoDocumentosPdf.csproj", "{13FC661C-9B53-45F0-823E-A12C8016318F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13FC661C-9B53-45F0-823E-A12C8016318F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13FC661C-9B53-45F0-823E-A12C8016318F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13FC661C-9B53-45F0-823E-A12C8016318F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13FC661C-9B53-45F0-823E-A12C8016318F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B11A270-09B6-4400-A1FD-C91980EDB4B7}
+	EndGlobalSection
+EndGlobal
